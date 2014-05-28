@@ -46,8 +46,14 @@ def PlaySample():
     file = files.pop()
     LogAction("playing {0}".format(file));
 
-    mixer.music.load(files.pop())
-    mixer.music.play()
+    
+    if mixer.get_busy():
+        mixer.queue(files.pop())
+        while mixer.get_busy():
+            pass
+    else:
+        mixer.music.load(files.pop())
+        mixer.music.play()
     time.sleep(.5)
     #ser.write(b'L')               # Key off
     if not files: #list is empty
