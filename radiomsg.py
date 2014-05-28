@@ -47,12 +47,10 @@ def PlaySample():
     LogAction("playing {0}".format(file));
 
     
-    if mixer.get_busy():
-        mixer.queue(files.pop())
-        while mixer.get_busy():
-            pass
+    if mixer.music.get_busy():
+        mixer.music.queue(file)
     else:
-        mixer.music.load(files.pop())
+        mixer.music.load(file)
         mixer.music.play()
     time.sleep(.5)
     #ser.write(b'L')               # Key off
